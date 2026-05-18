@@ -6,7 +6,7 @@ import '../models/reminder.dart';
 
 class ApiService {
   // 修改为实际服务器地址
-  static String baseUrl = 'http://YOUR_SERVER_IP:8000';
+  static String baseUrl = 'http://111.119.197.211:8000';
   
   static String? _token;
   static int? _userId;
