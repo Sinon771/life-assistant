@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  backend:
+    build: ./backend
+    container_name: life-assistant-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+    environment:
+      - DEBUG=false
+      - DATABASE_URL=sqlite+aiosqlite:///./data/life_assistant.db
+      # AI配置 - 硅基流动
+      - LLM_PROVIDER=siliconflow
+      - SILICONFLOW_API_KEY=${SILICONFLOW_API_KEY}
+      - SILICONFLOW_BASE_URL=https://api.siliconflow.cn/v1
+      - SILICONFLOW_MODEL=deepseek-ai/DeepSeek-V2.5
+      # 或 Kimi配置
+      # - LLM_PROVIDER=kimi
+      # - KIMI_API_KEY=${KIMI_API_KEY}
+      # - KIMI_BASE_URL=https://api.moonshot.cn/v1
+      # - KIMI_MODEL=moonshot-v1-8k
+      - SECRET_KEY=${SECRET_KEY:-change-me-in-production}
+      - TOKEN_EXPIRE_HOURS=720
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
